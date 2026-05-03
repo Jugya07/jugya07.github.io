@@ -1,0 +1,61 @@
+/* src/styles/global.css */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: auto; height: auto; }
+
+/* Lenis */
+.lenis.lenis-smooth    { scroll-behavior: auto; }
+.lenis.lenis-stopped   { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+body {
+  font-family:            var(--font-body, 'Inter', sans-serif);
+  background-color:       var(--contentBg, #141414);
+  color:                  var(--contentText, #d4d4d0);
+  line-height:            1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--contentBorder, #272727); border-radius: 2px; }
+
+/* ── CSS variables for mobile chrome heights ─────────────── */
+:root {
+  --topbar-h:     48px;
+  --bottomnav-h:  56px;
+}
+
+/* ── Desktop: sidebar visible, mobile nav hidden ─────────── */
+.sidebar-wrapper    { display: flex; }
+.mobile-nav-wrapper { display: none; }
+
+/* ── Mobile: sidebar hidden, mobile nav visible ──────────── */
+@media (max-width: 768px) {
+  .sidebar-wrapper    { display: none !important; }
+  .mobile-nav-wrapper { display: block !important; }
+
+  /* Push content clear of fixed topbar and bottom nav */
+  main {
+    padding-top:    var(--topbar-h) !important;
+    padding-bottom: var(--bottomnav-h) !important;
+  }
+
+  /* Each section fills exactly the visible area between the two bars */
+  section {
+    min-height: calc(100vh - var(--topbar-h) - var(--bottomnav-h)) !important;
+  }
+}
+
+/* ── Single-column theme nav ─────────────────────────────── */
+.desktop-nav      { display: flex !important; }
+.mobile-hamburger { display: none !important; }
+
+@media (max-width: 640px) {
+  .desktop-nav      { display: none !important; }
+  .mobile-hamburger { display: block !important; }
+}
+
+*:focus-visible { outline: 2px solid var(--accent, #68E0CF); outline-offset: 2px; }
