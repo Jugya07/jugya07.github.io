@@ -3,7 +3,7 @@ export const SectionHeading = ({ children }) => (
   <h2
     style={{
       fontFamily: "var(--font-mono)",
-      fontSize: "clamp(1.1rem, 2vw, 1.4rem)",
+      fontSize: "clamp(1.2rem, 2vw, 1.55rem)",
       fontWeight: 500,
       color: "var(--accent)",
       marginBottom: "0.25rem",

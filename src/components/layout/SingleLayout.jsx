@@ -1,5 +1,5 @@
 // src/components/layout/SingleLayout.jsx
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { PERSONAL, NAV_ITEMS, LINKS } from "../../config";
 import { useScrollSpy } from "../../hooks/useScrollSpy";
 import { scrollToSection } from "../../utils/scroll";
@@ -9,9 +9,19 @@ const sectionIds = NAV_ITEMS.map((n) => n.sectionId);
 export const SingleLayout = ({ children }) => {
   const activeSection = useScrollSpy(sectionIds);
   const [open, setOpen] = useState(false);
+  const mainRef = useRef(null);
+
+  const handlePointerMove = useCallback((event) => {
+    const main = mainRef.current;
+    if (!main) return;
+
+    const rect = main.getBoundingClientRect();
+    main.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
+    main.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
+  }, []);
 
   return (
-    <div style={{ background: "var(--contentBg)", minHeight: "100vh" }}>
+    <div className="ambient-screen" style={{ minHeight: "100vh" }}>
       {/* Top navbar */}
       <header
         style={{
@@ -127,6 +137,8 @@ export const SingleLayout = ({ children }) => {
       )}
 
       <main
+        ref={mainRef}
+        onPointerMove={handlePointerMove}
         style={{
           maxWidth: "760px",
           margin: "0 auto",
