@@ -36,7 +36,7 @@ export const themes = {
     },
     layout: {
       type: "split",
-      sidebarWidth: "210px",
+      sidebarWidth: "220px",
       sidebarIconWidth: "52px",
     },
   },
@@ -76,7 +76,7 @@ export const themes = {
     },
     layout: {
       type: "split",
-      sidebarWidth: "200px",
+      sidebarWidth: "220px",
       sidebarIconWidth: "48px",
     },
   },

@@ -1,23 +1,33 @@
 // src/components/sections/AboutSection.jsx
+import { useRef } from "react";
+import { useGsapReveal } from "../../hooks/useGsapReveal";
 import { SectionHeading } from "../ui/SectionHeading";
 
-export const AboutSection = () => (
+export const AboutSection = () => {
+  const sectionRef = useRef(null);
+  useGsapReveal(sectionRef);
+
+  return (
   <section
     id="about"
+    ref={sectionRef}
     style={{
       minHeight: "100vh",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      padding: "3rem 2.5rem",
+      padding: "3.25rem 3rem",
       borderBottom: "1px solid var(--contentBorder)",
     }}
   >
-    <SectionHeading>about</SectionHeading>
+    <div data-animate>
+      <SectionHeading>about</SectionHeading>
+    </div>
     <div
+      data-animate
       style={{
         fontFamily: "var(--font-mono)",
-        fontSize: "11px",
+        fontSize: "12px",
         color: "var(--contentMuted)",
         marginBottom: "1.75rem",
         marginTop: "2px",
@@ -28,13 +38,14 @@ export const AboutSection = () => (
 
     {/* Long-form text — prose font */}
     <p
+      data-animate
       style={{
         fontFamily: "var(--font-mono)",
-        fontSize: "1.05rem",
+        fontSize: "1.13rem",
         // fontStyle:    "italic",
         lineHeight: 1.9,
         color: "var(--contentText)",
-        maxWidth: "560px",
+        maxWidth: "620px",
       }}
     >
       I have been doing web development for over a year, working on both
@@ -42,13 +53,14 @@ export const AboutSection = () => (
       Computing and loving it.
     </p>
     <p
+      data-animate
       style={{
         fontFamily: "var(--font-mono)",
-        fontSize: "1.05rem",
+        fontSize: "1.13rem",
         // fontStyle: "italic",
         lineHeight: 1.9,
         color: "var(--contentText)",
-        maxWidth: "560px",
+        maxWidth: "620px",
         marginTop: "1rem",
       }}
     >
@@ -58,6 +70,7 @@ export const AboutSection = () => (
 
     {/* Meta tags — monospace, not prose */}
     <div
+      data-animate
       style={{
         marginTop: "1.75rem",
         display: "flex",
@@ -70,8 +83,8 @@ export const AboutSection = () => (
           key={tag}
           style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "11px",
-            padding: "3px 10px",
+            fontSize: "12px",
+            padding: "4px 11px",
             borderRadius: "3px",
             border: "1px solid var(--contentBorder)",
             color: "var(--contentMuted)",
@@ -82,4 +95,5 @@ export const AboutSection = () => (
       ))}
     </div>
   </section>
-);
+  );
+};

@@ -1,13 +1,17 @@
 // src/components/sections/SkillsSection.jsx
+import { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SKILLS } from "../../config";
+import { useGsapReveal } from "../../hooks/useGsapReveal";
 import { SectionHeading } from "../ui/SectionHeading";
 import { resolveIcon } from "../../utils/icons";
 
 const SkillCard = ({ name, about, icon, link }) => (
   <div
+    data-animate
+    data-hover-lift
     style={{
-      padding: "1.25rem",
+      padding: "1.35rem",
       border: "1px solid var(--cardBorder)",
       borderRadius: "6px",
       background: "var(--cardBg)",
@@ -30,12 +34,12 @@ const SkillCard = ({ name, about, icon, link }) => (
     >
       <FontAwesomeIcon
         icon={resolveIcon(icon)}
-        style={{ fontSize: "18px", color: "var(--accent)", flexShrink: 0 }}
+        style={{ fontSize: "20px", color: "var(--accent)", flexShrink: 0 }}
       />
       <span
         style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "13px",
+          fontSize: "14px",
           fontWeight: 500,
           color: "var(--contentText)",
         }}
@@ -46,7 +50,7 @@ const SkillCard = ({ name, about, icon, link }) => (
     <p
       style={{
         fontFamily: "var(--font-mono)",
-        fontSize: "13px",
+        fontSize: "14px",
         color: "var(--contentMuted)",
         lineHeight: 1.75,
         margin: 0,
@@ -63,7 +67,7 @@ const SkillCard = ({ name, about, icon, link }) => (
           display: "inline-block",
           marginTop: "0.75rem",
           fontFamily: "var(--font-mono)",
-          fontSize: "11px",
+          fontSize: "12px",
           color: "var(--accent)",
           textDecoration: "underline",
           textUnderlineOffset: "3px",
@@ -75,23 +79,31 @@ const SkillCard = ({ name, about, icon, link }) => (
   </div>
 );
 
-export const SkillsSection = () => (
+export const SkillsSection = () => {
+  const sectionRef = useRef(null);
+  useGsapReveal(sectionRef, { stagger: 0.06 });
+
+  return (
   <section
     id="skills"
+    ref={sectionRef}
     style={{
       minHeight: "100vh",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      padding: "3rem 2.5rem",
+      padding: "3.25rem 3rem",
       borderBottom: "1px solid var(--contentBorder)",
     }}
   >
-    <SectionHeading>skills</SectionHeading>
+    <div data-animate>
+      <SectionHeading>skills</SectionHeading>
+    </div>
     <div
+      data-animate
       style={{
         fontFamily: "var(--font-mono)",
-        fontSize: "11px",
+        fontSize: "12px",
         color: "var(--contentMuted)",
         marginBottom: "1.5rem",
         marginTop: "2px",
@@ -111,4 +123,5 @@ export const SkillsSection = () => (
       ))}
     </div>
   </section>
-);
+  );
+};

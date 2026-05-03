@@ -1,6 +1,8 @@
 // src/components/sections/ContactSection.jsx
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useEmailJS } from "../../hooks/useEmailJS";
+import { useGsapReveal } from "../../hooks/useGsapReveal";
 import { SectionHeading } from "../ui/SectionHeading";
 
 const inputStyle = {
@@ -8,9 +10,9 @@ const inputStyle = {
   background:   "transparent",
   border:       "1px solid var(--contentBorder)",
   borderRadius: "4px",
-  padding:      "10px 12px",
+  padding:      "11px 13px",
   fontFamily:   "var(--font-body)",
-  fontSize:     "14px",
+  fontSize:     "15px",
   color:        "var(--contentText)",
   outline:      "none",
   transition:   "border-color 0.2s",
@@ -19,7 +21,7 @@ const inputStyle = {
 
 const labelStyle = {
   fontFamily:    "var(--font-mono)",
-  fontSize:      "11px",
+  fontSize:      "12px",
   color:         "var(--contentMuted)",
   display:       "block",
   marginBottom:  "6px",
@@ -27,8 +29,10 @@ const labelStyle = {
 };
 
 export const ContactSection = () => {
+  const sectionRef = useRef(null);
   const { send, status } = useEmailJS();
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  useGsapReveal(sectionRef, { stagger: 0.07 });
 
   const onSubmit = async (data) => {
     await send(data);
@@ -38,19 +42,23 @@ export const ContactSection = () => {
   return (
     <section
       id="contact"
+      ref={sectionRef}
       style={{
         minHeight:      "100vh",
         display:        "flex",
         flexDirection:  "column",
         justifyContent: "center",
-        padding:        "3rem 2.5rem",
+        padding:        "3.25rem 3rem",
       }}
     >
-      <SectionHeading>contact</SectionHeading>
+      <div data-animate>
+        <SectionHeading>contact</SectionHeading>
+      </div>
       <div
+        data-animate
         style={{
           fontFamily:   "var(--font-mono)",
-          fontSize:     "11px",
+          fontSize:     "12px",
           color:        "var(--contentMuted)",
           marginBottom: "1.75rem",
           marginTop:    "2px",
@@ -60,11 +68,12 @@ export const ContactSection = () => {
       </div>
 
       <form
+        data-animate
         onSubmit={handleSubmit(onSubmit)}
         style={{ maxWidth: "480px", display: "flex", flexDirection: "column", gap: "1.25rem" }}
       >
         {/* Name */}
-        <div>
+        <div data-animate>
           <label style={labelStyle}>NAME</label>
           <input
             style={inputStyle}
@@ -77,14 +86,14 @@ export const ContactSection = () => {
             })}
           />
           {errors.name && (
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#e55", marginTop: "4px", display: "block" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "#e55", marginTop: "4px", display: "block" }}>
               {errors.name.message}
             </span>
           )}
         </div>
 
         {/* Email */}
-        <div>
+        <div data-animate>
           <label style={labelStyle}>EMAIL</label>
           <input
             style={inputStyle}
@@ -98,14 +107,14 @@ export const ContactSection = () => {
             })}
           />
           {errors.email && (
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#e55", marginTop: "4px", display: "block" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "#e55", marginTop: "4px", display: "block" }}>
               {errors.email.message}
             </span>
           )}
         </div>
 
         {/* Message */}
-        <div>
+        <div data-animate>
           <label style={labelStyle}>MESSAGE</label>
           <textarea
             style={{ ...inputStyle, minHeight: "140px", resize: "vertical" }}
@@ -115,7 +124,7 @@ export const ContactSection = () => {
             {...register("message", { required: "Message is required" })}
           />
           {errors.message && (
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#e55", marginTop: "4px", display: "block" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "#e55", marginTop: "4px", display: "block" }}>
               {errors.message.message}
             </span>
           )}
@@ -123,13 +132,15 @@ export const ContactSection = () => {
 
         {/* Submit */}
         <button
+          data-hover-lift
+          data-animate
           type="submit"
           disabled={status === "sending"}
           style={{
             alignSelf:    "flex-start",
             fontFamily:   "var(--font-mono)",
-            fontSize:     "13px",
-            padding:      "10px 22px",
+            fontSize:     "14px",
+            padding:      "11px 24px",
             borderRadius: "4px",
             border:       "1px solid var(--accent)",
             color:        "var(--accent)",
@@ -145,12 +156,12 @@ export const ContactSection = () => {
         </button>
 
         {status === "success" && (
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--accent)" }}>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "var(--accent)" }}>
             ✓ Message sent successfully.
           </p>
         )}
         {status === "error" && (
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "#e55" }}>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "#e55" }}>
             ✗ Something went wrong. Please try again.
           </p>
         )}

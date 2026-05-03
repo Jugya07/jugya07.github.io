@@ -51,6 +51,7 @@ export const NAV_ITEMS = [
   { label: "home", sectionId: "home" },
   { label: "about", sectionId: "about" },
   { label: "skills", sectionId: "skills" },
+  { label: "projects", sectionId: "projects" },
   { label: "edu", sectionId: "education" },
   { label: "contact", sectionId: "contact" },
 ];
@@ -99,6 +100,47 @@ export const SKILLS = [
     about:
       "My DSA language of choice. Low-level memory management and algorithmic thinking keep me sharp.",
     link: { label: "LeetCode", href: "https://leetcode.com/crjugya123/" },
+  },
+];
+
+// ── Projects ────────────────────────────────────────────────
+// Replace these placeholders with your real project details later.
+export const PROJECTS = [
+  {
+    key: "portfolio",
+    title: "Portfolio Website",
+    type: "Frontend",
+    status: "Live",
+    period: "2026",
+    description:
+      "A personal portfolio with a terminal-inspired interface, smooth scrolling, responsive navigation, and animated section reveals.",
+    stack: ["React", "Vite", "GSAP", "Tailwind"],
+    github: "https://github.com/Jugya07",
+    demo: "#",
+  },
+  {
+    key: "cloud-dashboard",
+    title: "Cloud Resource Dashboard",
+    type: "Cloud",
+    status: "Draft",
+    period: "Coming soon",
+    description:
+      "Placeholder for a cloud-focused project. Add architecture notes, deployment details, and the problem it solves here.",
+    stack: ["React", "Node.js", "AWS", "MongoDB"],
+    github: "#",
+    demo: "#",
+  },
+  {
+    key: "systems-tool",
+    title: "Systems Utility Tool",
+    type: "Systems",
+    status: "Draft",
+    period: "Coming soon",
+    description:
+      "Placeholder for firmware, BIOS, or low-level engineering work. Use this card to highlight technical depth and impact.",
+    stack: ["C", "C++", "Linux", "Debugging"],
+    github: "#",
+    demo: "#",
   },
 ];
 

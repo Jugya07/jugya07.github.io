@@ -1,4 +1,5 @@
 // src/components/layout/SplitLayout.jsx
+import { useCallback, useRef } from "react";
 import { useTheme } from "../../themes/ThemeContext";
 import { NAV_ITEMS } from "../../config";
 import { useScrollSpy } from "../../hooks/useScrollSpy";
@@ -10,6 +11,16 @@ const sectionIds = NAV_ITEMS.map(n => n.sectionId);
 export const SplitLayout = ({ children }) => {
   const theme = useTheme();
   const activeSection = useScrollSpy(sectionIds);
+  const mainRef = useRef(null);
+
+  const handlePointerMove = useCallback((event) => {
+    const main = mainRef.current;
+    if (!main) return;
+
+    const rect = main.getBoundingClientRect();
+    main.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
+    main.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
+  }, []);
 
   return (
     <>
@@ -24,10 +35,12 @@ export const SplitLayout = ({ children }) => {
 
         {/* Content panel */}
         <main
+          ref={mainRef}
+          className="ambient-screen"
+          onPointerMove={handlePointerMove}
           style={{
             flex:       1,
             overflowX:  "hidden",
-            background: "var(--contentBg)",
             color:      "var(--contentText)",
             fontFamily: "var(--font-body)",
           }}
