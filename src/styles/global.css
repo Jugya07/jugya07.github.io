@@ -17,6 +17,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 /* Thin scrollbar */
 ::-webkit-scrollbar        { width: 4px; }
 ::-webkit-scrollbar-track  { background: transparent; }
@@ -68,6 +72,105 @@ body {
   background:
     radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 34rem),
     var(--contentBg);
+}
+
+.boot-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 26rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--contentBg) 80%, #000 20%), #050505);
+  backdrop-filter: blur(12px);
+}
+
+.boot-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 100% 4px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.boot-loader__panel {
+  position: relative;
+  width: min(32rem, 100%);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--contentBorder));
+  background: color-mix(in srgb, var(--contentBg) 88%, #000 12%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 8%, transparent),
+    0 24px 80px rgba(0, 0, 0, 0.48);
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+
+.boot-loader__signature {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 1.1rem;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+
+.boot-loader__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.boot-loader__line {
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  color: var(--contentText);
+  min-height: 1.4em;
+}
+
+.boot-loader__line::after {
+  content: "_";
+  margin-left: 0.1rem;
+  color: var(--accent);
+  animation: bootCursorBlink 0.9s steps(1) infinite;
+}
+
+.boot-loader__progress {
+  width: 100%;
+  height: 2px;
+  margin-top: 1.2rem;
+  background: color-mix(in srgb, var(--contentBorder) 78%, transparent);
+  overflow: hidden;
+}
+
+.boot-loader__progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 35%, transparent),
+    var(--accent)
+  );
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+
+@keyframes bootCursorBlink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .ambient-screen::before,
