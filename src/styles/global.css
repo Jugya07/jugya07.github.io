@@ -64,6 +64,53 @@ body {
 
 *:focus-visible { outline: 2px solid var(--accent, #68E0CF); outline-offset: 2px; }
 
+/* ── Custom cursor (desktop, fine pointer, motion allowed only) ──── */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.2s ease, width 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cursor-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--accent, #68E0CF);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent, #68E0CF) 55%, transparent);
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--accent, #68E0CF) 55%, transparent);
+}
+
+.cursor-ring.is-active {
+  width: 54px;
+  height: 54px;
+  background: color-mix(in srgb, var(--accent, #68E0CF) 8%, transparent);
+  border-color: var(--accent, #68E0CF);
+}
+
+html.cursor-ready .cursor-dot,
+html.cursor-ready .cursor-ring {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-ready,
+  html.cursor-ready * {
+    cursor: none !important;
+  }
+}
+
 .ambient-screen {
   --spotlight-x: 50%;
   --spotlight-y: 22%;

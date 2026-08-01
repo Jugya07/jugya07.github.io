@@ -174,6 +174,7 @@ export const Sidebar = ({ activeSection, sidebarWidth }) => {
       {/* Resume */}
       <a
         className="sidebar-resume"
+        data-magnetic
         href={LINKS.resume}
         target="_blank"
         rel="noreferrer"

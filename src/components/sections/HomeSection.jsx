@@ -1,12 +1,53 @@
 // src/components/sections/HomeSection.jsx
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Typed from "react-typed";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { PERSONAL, LINKS } from "../../config";
 import { useGsapReveal } from "../../hooks/useGsapReveal";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export const HomeSection = () => {
   const sectionRef = useRef(null);
+  const avatarRef = useRef(null);
   useGsapReveal(sectionRef, { start: "top 80%", stagger: 0.1, y: 32 });
+
+  // Avatar lags behind + shrinks as the hero scrolls out of view. Scoped to
+  // ~0.65 of a viewport height so it resolves while the avatar is still on
+  // screen, rather than smearing across the whole (much taller) section.
+  useLayoutEffect(() => {
+    const avatar = avatarRef.current;
+    const section = sectionRef.current;
+    if (!avatar || !section) return undefined;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (prefersReducedMotion) return undefined;
+
+    const ctx = gsap.context(() => {
+      // Horizontal centering lives on xPercent so the scrub tween's own y can
+      // stack on top without fighting a static CSS transform. Vertically the
+      // photo is anchored to the wrapper's bottom edge (see JSX) so all of
+      // its extra height spills upward, not centered/downward.
+      gsap.set(avatar, { xPercent: -50 });
+      gsap.to(avatar, {
+        y: 90,
+        scale: 0.86,
+        opacity: 0.4,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${Math.round(window.innerHeight * 0.65)}`,
+          scrub: 0.5,
+        },
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
@@ -43,23 +84,40 @@ export const HomeSection = () => {
         alignItems: "center",
         gap: "1.5rem",
         flexWrap: "wrap",
+        marginTop: "3rem", // clears the photo's upward overflow from the breadcrumb above it
         marginBottom: "1.75rem",
       }}
     >
-      <img
-        src={PERSONAL.image}
-        alt={PERSONAL.name}
+      {/* Wrapper reserves the layout slot at the ring's size. The photo sits
+          underneath, rendered larger and centered, so it visibly spills past
+          the ring drawn on top of it — instead of the two just scaling
+          together as one bigger circle. */}
+      <div
         style={{
-          width: "96px",
-          height: "96px",
-          borderRadius: "50%",
-          objectFit: "cover",
-          border: "2px solid var(--contentBorder)",
+          position: "relative",
+          width: "clamp(110px, 14vw, 148px)",
+          height: "clamp(110px, 14vw, 148px)",
+          flexShrink: 0,
         }}
-        onError={(e) => {
-          e.target.style.display = "none";
-        }}
-      />
+      >
+        <img
+          ref={avatarRef}
+          src={PERSONAL.image}
+          alt={PERSONAL.name}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "50%",
+            width: "148%",
+            height: "148%",
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
+          onError={(e) => {
+            e.target.style.display = "none";
+          }}
+        />
+      </div>
       <div>
         <h1
           style={{
@@ -114,6 +172,7 @@ export const HomeSection = () => {
     <div data-animate style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
       <a
         data-hover-lift
+        data-magnetic
         href={LINKS.github}
         target="_blank"
         rel="noreferrer"
@@ -136,6 +195,7 @@ export const HomeSection = () => {
       </a>
       <a
         data-hover-lift
+        data-magnetic
         href={LINKS.resume}
         target="_blank"
         rel="noreferrer"

@@ -6,6 +6,7 @@ import { useLenis } from "./hooks/useLenis";
 import { SplitLayout } from "./components/layout/SplitLayout";
 import { SingleLayout } from "./components/layout/SingleLayout";
 import { BootLoader } from "./components/ui/BootLoader";
+import { CustomCursor } from "./components/ui/CustomCursor";
 import { HomeSection } from "./components/sections/HomeSection";
 import { AboutSection } from "./components/sections/AboutSection";
 import { SkillsSection } from "./components/sections/SkillsSection";
@@ -42,6 +43,7 @@ const App = () => {
   return (
     <>
       {isBooting && <BootLoader onDone={() => setIsBooting(false)} />}
+      <CustomCursor />
       <Layout>
         <Sections />
       </Layout>
