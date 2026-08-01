@@ -1,5 +1,5 @@
 // src/utils/icons.js
-import { faDatabase, faC } from "@fortawesome/free-solid-svg-icons";
+import { faDatabase, faC, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
   faJs,
   faReact,
@@ -20,6 +20,7 @@ const iconMap = {
   faLinkedin,
   faFacebook,
   faInstagram,
+  faEnvelope,
 };
 
 /** Resolve a string icon key to a FontAwesome icon object */

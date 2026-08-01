@@ -1,11 +1,16 @@
 // src/components/sections/EducationSection.jsx
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EDUCATION } from "../../config";
 import { useGsapReveal } from "../../hooks/useGsapReveal";
 import { SectionHeading } from "../ui/SectionHeading";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const EduRow = ({ institution, period, detail, isLast }) => (
   <div
+    className="edu-row"
     data-animate
     style={{
       display: "flex",
@@ -14,18 +19,34 @@ const EduRow = ({ institution, period, detail, isLast }) => (
       position: "relative",
     }}
   >
-    {/* Timeline line */}
+    {/* Timeline line — static track, plus a phosphor fill that draws in on scroll */}
     {!isLast && (
-      <div
-        style={{
-          position: "absolute",
-          left: "7px",
-          top: "18px",
-          bottom: 0,
-          width: "1px",
-          background: "var(--contentBorder)",
-        }}
-      />
+      <>
+        <div
+          style={{
+            position: "absolute",
+            left: "7px",
+            top: "18px",
+            bottom: 0,
+            width: "1px",
+            background: "var(--contentBorder)",
+          }}
+        />
+        <div
+          className="edu-line-fill"
+          style={{
+            position: "absolute",
+            left: "7px",
+            top: "18px",
+            bottom: 0,
+            width: "1px",
+            background: "var(--accent)",
+            boxShadow: "0 0 6px var(--accent)",
+            transform: "scaleY(0)",
+            transformOrigin: "top center",
+          }}
+        />
+      </>
     )}
 
     {/* Dot */}
@@ -83,6 +104,35 @@ const EduRow = ({ institution, period, detail, isLast }) => (
 export const EducationSection = () => {
   const sectionRef = useRef(null);
   useGsapReveal(sectionRef, { stagger: 0.09 });
+
+  // Each connector line draws itself in as its row scrolls through view,
+  // instead of appearing all at once with the rest of the row.
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (prefersReducedMotion) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray(".edu-line-fill").forEach((line) => {
+        gsap.to(line, {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: line.closest(".edu-row"),
+            start: "top 65%",
+            end: "bottom 65%",
+            scrub: 0.4,
+          },
+        });
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
   <section

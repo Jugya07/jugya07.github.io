@@ -24,8 +24,8 @@ export const PERSONAL = {
   ],
   bio: "I am a Software Engineer at Cisco, currently specialized in the BIOS development team. My work lives at the intersection of hardware and software, where I focus on system initialization, firmware stability, and optimizing the foundational layers of networking hardware.",
   location: "NIT Silchar, India",
-  email: "jugyakamalgogoi@email.com",
-  image: "/images/dp2.png",
+  email: "jugyakamalgogoi@gmail.com",
+  image: "/images/dp3.png",
 };
 
 // ── Social / external links ──────────────────────────────────
@@ -37,13 +37,6 @@ export const LINKS = {
   leetcode: "https://leetcode.com/crjugya123/",
   resume:
     "https://drive.google.com/file/d/1xlYeNoBSuAsxjfMrXtN9hB03kqEI43CH/view?usp=drive_link",
-};
-
-// ── EmailJS config (for contact form) ────────────────────────
-export const EMAILJS = {
-  serviceId: "service_norsap4",
-  templateId: "template_yypv0sn",
-  publicKey: "tz9wocBORuqO1Rwj0",
 };
 
 // ── Navigation items ─────────────────────────────────────────
